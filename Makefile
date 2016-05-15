@@ -1,4 +1,4 @@
-all: vendor/ember.js
+all:
 
-include mk/ember.mk
-include mk/closure.mk
+include mk/*.mk
+include config.mk

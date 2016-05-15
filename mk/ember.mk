@@ -3,6 +3,9 @@ EMBER_FLAVOR := debug
 
 EMBER_URL := http://builds.emberjs.com/tags/v$(EMBER_VER)/ember.$(EMBER_FLAVOR).js
 
-vendor/ember.js: ember.mk
+html/vendor/ember.js: mk/ember.mk config.mk
 	mkdir -p '$(@D)'
 	wget -O '$@' '$(EMBER_URL)'
+	touch '$@'
+
+all: html/vendor/ember.js

@@ -1,3 +1,5 @@
 *.swp
 build
-vendor/ember.js
+html/vendor/ember.js
+config.mk
+nginx/nginx.conf
