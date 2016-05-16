@@ -3,3 +3,6 @@ build
 html/vendor/ember.js
 config.mk
 nginx/nginx.conf
+nginx/log
+nginx/var
+html/vendor
