@@ -2,16 +2,16 @@
 
   var process = require('process');
 
-  if ( process.argv.length < 4 ) {
+  if ( process.argv.length < 3 ) {
 
-    process.stderr.write("usage: tools/tc.js <module> <template file>\n");
+    process.stderr.write("usage: tools/tc.js <template file>\n");
     process.exit(1);
 
   }
 
   var fs = require('fs');
 
-  var input = fs.readFileSync(process.argv[3], {encoding:'utf8'});
+  var input = fs.readFileSync(process.argv[2], {encoding:'utf8'});
 
   var tc = require('./../vendor/tc.js');
 

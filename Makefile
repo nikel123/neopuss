@@ -1,8 +1,12 @@
 all:
+.SUFFIXES:
+.SECONDEXPANSION:
 
 include mk/*.mk
 include config.mk
 
-all: adminui
+.PHONY: adminui_all
+adminui_all: html/adminui/app.js
+CLEAN += html/adminui/app.js
 
-adminui: $(call ui,adminui)
+all: adminui_all

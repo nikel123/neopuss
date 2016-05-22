@@ -7,3 +7,4 @@ nginx/log
 nginx/var
 html/vendor
 vendor/tc.js
+html/*/app.js
