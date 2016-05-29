@@ -1,4 +1,4 @@
-JQUERY_VER    := 2.2.3
+JQUERY_VER    := 2.2.4
 
 JQUERY_URL := https://code.jquery.com/jquery-$(JQUERY_VER).js
 
