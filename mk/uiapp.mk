@@ -12,6 +12,8 @@ build/$1/%.js: $1/%.js ./tools/modc config.mk mk/uiapp.mk
 	mkdir -p '$$(@D)'
 	$$(MOD_COMPILER) '$$<' > '$$@'
 
+.PRECIOUS: build/$1/%.js
+
 endef
 
 $(eval $(foreach i,$(wildcard */app),$(call uirules,$i)))
@@ -26,9 +28,9 @@ common_mods=$(call ui_mods,common)
 common_js=$(call ui_js,common)
 
 html/%/app.js: \
-    $(common_hbs) $$(call ui_hbs,%) \
+		$(common_js) $$(call ui_js) \
 		$(common_mods) $$(call ui_mods,%) \
-		$(common_js) $$(call ui_js)
+    $(common_hbs) $$(call ui_hbs,%)
 	mkdir -p '$(@D)'
 	for i in $(filter %.js,$^) ; do \
 	  echo "// $$i"; \

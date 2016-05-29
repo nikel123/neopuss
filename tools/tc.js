@@ -17,8 +17,8 @@
   process.stdout.write(
       fname.replace(
           /^([^\/]*\/)app\/(.*)[\.\/]([^\.]+)\.hbs$/,
-          'App.register(\'$3:$2\',') +
+          'App.register(\'$3:$2\', Ember.HTMLBars.template(') +
       tc.precompile(input) +
-    ');\n');
+    '));\n');
 
 })();
