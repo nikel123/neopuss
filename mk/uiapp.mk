@@ -4,19 +4,24 @@ MOD_COMPILER ?= ./tools/modc
 
 define uirules
 
-build/$(1)/%.js: $1/%.hbs ./tools/tc.js config.mk mk/uiapp.mk
+build/$(1)/app/%.js: $1/app/%.hbs ./tools/tc.js config.mk mk/uiapp.mk
 	mkdir -p '$$(@D)'
 	$$(TEMPLATE_COMPILER) '$$<' > '$$@'
 
-build/$1/%.js: $1/%.js ./tools/modc config.mk mk/uiapp.mk
+build/$1/app/%.js: $1/app/%.js ./tools/modc config.mk mk/uiapp.mk
 	mkdir -p '$$(@D)'
 	$$(MOD_COMPILER) '$$<' > '$$@'
 
-.PRECIOUS: build/$1/%.js
+.PRECIOUS: build/$1/app/%.js
+
+.PHONY: $(1)_all
+$(1)_all: html/$(1)/app.js html/$(1)/app.css
+CLEAN += html/$(1)/app.js html/$(1)/app.css
 
 endef
 
-$(eval $(foreach i,$(wildcard */app),$(call uirules,$i)))
+$(info $(foreach i,$(patsubst %/app,%,$(wildcard */app)),$(call uirules,$i)))
+$(eval $(foreach i,$(patsubst %/app,%,$(wildcard */app)),$(call uirules,$i)))
 
 ui_src=$(shell [ -e '$1' ] && find '$1' -type f -name '*.$2')
 ui_hbs=$(patsubst %.hbs,build/%.js,$(call ui_src,$1/app,hbs))
