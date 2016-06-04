@@ -5,12 +5,18 @@ body {
   padding: 1%;
 }
 
-header {
+header, footer {
+  padding: 1ex;
   display:   block;
+  background-color: $bg-comp;
+  color: $fg-comp;
+}
+
+header {
   font-size: $big-font-size;
 }
 
 footer {
-  display:   block;
   font-size: $small-font-size;
+  text-align: center;
 }

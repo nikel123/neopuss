@@ -8,7 +8,7 @@ body {
 menu {
   display: inline-block; }
 
-/* line 7, /home/andrej/projects/neopuss/common/css/menu.scss */
+/* line 5, /home/andrej/projects/neopuss/common/css/menu.scss */
 menu.vertical {
   width: 30%; }
 
@@ -17,11 +17,17 @@ body {
   padding: 1%; }
 
 /* line 8, common/css/common.scss */
-header {
+header, footer {
+  padding: 1ex;
   display: block;
+  background-color: darkgray;
+  color: white; }
+
+/* line 15, common/css/common.scss */
+header {
   font-size: 24pt; }
 
-/* line 13, common/css/common.scss */
+/* line 19, common/css/common.scss */
 footer {
-  display: block;
-  font-size: 10pt; }
+  font-size: 10pt;
+  text-align: center; }

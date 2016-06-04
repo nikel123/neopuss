@@ -9,6 +9,16 @@ var e = argv.length;
 var input;
 var fname;
 
+var reg_name = function() {
+  var name;
+  if ( arguments[3] == 'component' ) {
+    name = 'components/' + arguments[2].replace('/', '-');
+  } else {
+    name = arguments[2];
+  }
+  return 'App.register(\'template:'+name+'\', Ember.HTMLBars.template(';
+}
+
 for(; i < e; ++i) {
 
   fname = argv[i];
@@ -16,7 +26,7 @@ for(; i < e; ++i) {
   stdout.write(
       fname.replace(
           /^([^\/]*\/)app\/(.*)[\.\/]([^\.]+)\.hbs$/,
-          'App.register(\'$3:$2\', Ember.HTMLBars.template(') +
+          reg_name) +
       tc.precompile(input) +
     '));\n');
 

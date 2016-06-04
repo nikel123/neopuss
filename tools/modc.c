@@ -20,8 +20,8 @@ enum {
 };
 
 struct str_t {
-  size_t      len;
-  const char *str;
+  size_t  len;
+  char   *str;
 };
 typedef struct str_t str_t;
 
@@ -88,6 +88,7 @@ get_module_name(
   int ret;
   regex_t re;
   regmatch_t matches[3];
+  size_t i;
 
   ret = regcomp(&re, "[^/]+/+app/+(.+)[\\./]([[:alpha:]]+).js", REG_EXTENDED);
   if ( ret ) {
@@ -103,13 +104,30 @@ get_module_name(
     goto nomatch_err;
 
   module_name->len = matches[1].rm_eo - matches[1].rm_so;
-  module_name->str = &(fname[matches[1].rm_so]);
+  module_name->str = malloc(module_name->len);
+  if ( module_name->str == 0 ) goto nomem;
+  memcpy(module_name->str, &(fname[matches[1].rm_so]), module_name->len);
+
+  for(i = 0; i < module_name->len; ++i) {
+    if ( module_name->str[i] == '/' )
+      module_name->str[i] = '-';
+  }
 
   module_class->len = matches[2].rm_eo - matches[2].rm_so;
-  module_class->str = &(fname[matches[2].rm_so]);
+  module_class->str = malloc(module_class->len);
+  if ( module_class->str == 0 ) goto nomem2;
+  memcpy(module_class->str, &(fname[matches[2].rm_so]), module_class->len);
 
 end:
   return ret;
+
+nomem2:
+  free(module_name->str);
+
+nomem:
+  fprintf(stderr,
+      "malloc() failed\n");
+  goto err;
 
 nomatch_err:
   fprintf(stderr,
@@ -445,6 +463,9 @@ main(
           argv[1],
           &module_name,
           &module_class);
+
+  free(module_name.str);
+  free(module_class.str);
 
 end:
   return ret;
