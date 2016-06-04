@@ -1,12 +1,12 @@
 NODE ?= node
-TEMPLATE_COMPILER ?= $(NODE) ./tools/tc.js
+TEMPLATE_COMPILER ?= $(NODE) ./tools/ptc.js
 MOD_COMPILER ?= ./tools/modc
 
 define uirules
 
-build/$(1)/app/%.js: $1/app/%.hbs ./tools/tc.js config.mk mk/uiapp.mk
+build/$1/app/templates.js: $(shell find common/app $1/app -type f -name '*.hbs') ./tools/ptc.js config.mk mk/uiapp.mk
 	mkdir -p '$$(@D)'
-	$$(TEMPLATE_COMPILER) '$$<' > '$$@'
+	$$(TEMPLATE_COMPILER) $$(filter %.hbs,$$^) > '$$@'
 
 build/$1/app/%.js: $1/app/%.js ./tools/modc config.mk mk/uiapp.mk
 	mkdir -p '$$(@D)'
@@ -15,12 +15,11 @@ build/$1/app/%.js: $1/app/%.js ./tools/modc config.mk mk/uiapp.mk
 .PRECIOUS: build/$1/app/%.js
 
 .PHONY: $(1)_all
-$(1)_all: html/$(1)/app.js html/$(1)/app.css
-CLEAN += html/$(1)/app.js html/$(1)/app.css
+$(1)_all: html/$1/app.js html/$1/app.css
+CLEAN += html/$1/app.js html/$1/app.css
 
 endef
 
-$(info $(foreach i,$(patsubst %/app,%,$(wildcard */app)),$(call uirules,$i)))
 $(eval $(foreach i,$(patsubst %/app,%,$(wildcard */app)),$(call uirules,$i)))
 
 ui_src=$(shell [ -e '$1' ] && find '$1' -type f -name '*.$2')
@@ -35,7 +34,7 @@ common_js=$(call ui_js,common)
 html/%/app.js: \
 		$(common_js) $$(call ui_js) \
 		$(common_mods) $$(call ui_mods,%) \
-    $(common_hbs) $$(call ui_hbs,%)
+    build/%/app/templates.js
 	mkdir -p '$(@D)'
 	for i in $(filter %.js,$^) ; do \
 	  echo "// $$i"; \

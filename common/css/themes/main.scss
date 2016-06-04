@@ -1,0 +1,10 @@
+@import 'themes/mono/theme';
+@import 'themes/default/size';
+
+body {
+
+  background-color: $bg_main;
+  color: $fg_main;
+  font-size: $default-font-size;
+
+}

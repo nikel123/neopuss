@@ -1,0 +1,27 @@
+/* line 4, /home/andrej/projects/neopuss/common/css/themes/main.scss */
+body {
+  background-color: white;
+  color: black;
+  font-size: 12pt; }
+
+/* line 1, /home/andrej/projects/neopuss/common/css/menu.scss */
+menu {
+  display: inline-block; }
+
+/* line 7, /home/andrej/projects/neopuss/common/css/menu.scss */
+menu.vertical {
+  width: 30%; }
+
+/* line 4, common/css/common.scss */
+body {
+  padding: 1%; }
+
+/* line 8, common/css/common.scss */
+header {
+  display: block;
+  font-size: 24pt; }
+
+/* line 13, common/css/common.scss */
+footer {
+  display: block;
+  font-size: 10pt; }
